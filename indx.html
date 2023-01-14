@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="UTF-8">
+
+<head>
+  <style>
+    button {
+      color: white;
+      background-color: black;
+      border-style: double;
+      padding: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <p><a href="/home/david/repos/js/indx.html"> page1</a></p>
+  <p>
+  <div id="output"></div>
+  </p>
+  <p><button id="button0" onclick="numberDisplay('0')">0</button></p>
+  <button id="button1" onclick="numberDisplay('1')">1</button>
+  <button id="button2" onclick="numberDisplay('2')">2</button>
+  <button id="button3" onclick="numberDisplay('3')">3</button>
+  <p><button id="button4" onclick="numberDisplay('4')">4</button>
+    <button id="button5" onclick="numberDisplay('5')">5</button>
+    <button id="button6" onclick="numberDisplay('6')">6</button>
+  </p>
+  <button id="button7" onclick="numberDisplay('7')">7</button>
+  <button id="button8" onclick="numberDisplay('8')">8</button>
+  <button id="button9" onclick="numberDisplay('9')">9</button>
+  <p><button id="+" onclick="calculationOperations('+')">+</button>
+    <button id="-" onclick="calculationOperations('-')">-</button>
+    <button id="-" onclick="calculationOperations('x')">x</button>
+    <button id="-" onclick="calculationOperations(':')">:</button>
+    <button id="+" onclick="equal('=')">=</button>
+    <button id="speak" onclick="voice()">speek</button>
+    <button id="speak" onclick="cl()">clear </button>
+
+
+    <script>
+
+      function numberDisplay(n) {
+        document.getElementById('output').innerText += n
+        console.log(output)
+      }
+
+
+      function calculationOperations(n) {
+        document.getElementById('output').innerText += n
+
+      }
+      function equal() {
+        let numbers = document.getElementById('output').innerText
+        let operations = { '-': '-', ':': ':', 'x': 'x', '+': '+' }
+        let location
+        for (let operat in operations) {
+          let locationInLoop = numbers.indexOf(operat)
+
+          if (locationInLoop >= 0) {
+
+            location = locationInLoop
+            break
+          }
+        }
+
+        let answer = numbers.slice(location, location + 1); // +,/,-,* //
+
+        switch (answer) {
+          case '+':
+            answer = parseInt(numbers.slice(0, location)) + parseInt(numbers.slice(location + 1));
+            break
+          case 'x':
+            answer = parseInt(numbers.slice(0, location)) * parseInt(numbers.slice(location + 1));
+            break
+          case '-':
+            answer = parseInt(numbers.slice(0, location)) - parseInt(numbers.slice(location + 1));
+            break
+          case ':':
+            answer = parseInt(numbers.slice(0, location)) / parseInt(numbers.slice(location + 1));
+        }
+        document.getElementById('output').innerText += "=" + answer
+
+      }
+
+      function voice() {
+        let text = document.getElementById('output').innerText;
+
+        let utterance = new SpeechSynthesisUtterance(text);
+        utterance.pitch = 0.7;
+        window.speechSynthesis.speak(utterance);
+      }
+
+      function cl() {
+        document.getElementById('output').innerText = ''
+
+
+      }
+    </script>
+</body>
